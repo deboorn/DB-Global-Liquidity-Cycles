@@ -1,4 +1,9 @@
 # DB-Global-Liquidity-Cycles
+
+CC BY-SA 4.0 DEED
+Attribution-ShareAlike 4.0 International
+License: https://creativecommons.org/licenses/by-sa/4.0/
+
 TradingView DB Global Liquidity Cycles Indicator
 
 ndicator designed to show global liquidity cycles and is designed specifically for the weekly timeframe. Special attention should be paid from 2008+ timeframe as that's when quantitative tightening (QT) was implemented.
