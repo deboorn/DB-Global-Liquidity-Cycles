@@ -1,0 +1,34 @@
+// Copyright 2023 Daniel Boorn daniel.boorn@gmail.com
+// For Private Use
+//@version=5
+indicator(title="DB Global Liquidity Cycles", overlay=false, timeframe="W", timeframe_gaps=true)
+
+
+showM2Offset = input.bool(false,'Show Projection 1')
+showM2Offset2 = input.bool(false,'Show Projection 2')
+
+m2Offset = input.int(208, 'Projection 1 Offset in Weeks')
+m2Offset2 = input.int(416, 'Projection 2 Offset in Weeks')
+
+globalM2 = request.security('TVC:CN10Y/TVC:DXY/FRED:BAMLH0A0HYM2*(ECONOMICS:USCBBS+FRED:JPNASSETS+ECONOMICS:CNCBBS+FRED:ECBASSETSW)', 'D', close)
+m2TopMult = 2.6 
+globalM2 := globalM2 / 1000000000
+
+len = bar_index-1 >= 0 ? bar_index+1 : 1
+
+m2Ma = ta.sma(globalM2,len)
+tB = m2Ma * m2TopMult
+p = (globalM2 / tB) * 100
+
+plot(p,'Global Liquidity', linewidth = 2)
+plot(showM2Offset ? p : na,'Global Liquidity Projection 1', linewidth = 2, color=color.yellow, offset=m2Offset)
+plot(showM2Offset2 ? p : na,'Global Liquidity Projection 2', linewidth = 2, color=color.fuchsia, offset=m2Offset2)
+
+h1 = hline(30,linestyle = hline.style_solid)
+h2 = hline(40,linestyle = hline.style_solid)
+fill(h1, h2, color=color.new(color.gray,90))
+hline(65)
+
+h3 = hline(90,linestyle = hline.style_solid)
+h4 = hline(100,linestyle = hline.style_solid)
+fill(h3, h4, color=color.new(color.gray,90))
